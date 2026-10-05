@@ -2762,14 +2762,14 @@
   <script>
   // Product data - comes from backend, DO NOT CHANGE ids, names or prices
   const PRODUCTS = [
-    { id: 101, name: "Assam Breakfast Black Tea", category: "Black", price: 349, stock: 40, image: "images/p101.png", desc: "Strong, malty CTC tea from Upper Assam estates. Perfect with milk and a little sugar in the morning." },
-    { id: 102, name: "Darjeeling First Flush", category: "Black", price: 1299, stock: 12, image: "images/p102.png", desc: "Delicate, floral spring harvest leaves with a muscatel note. Best without milk.", rating: 4.8, reviews: 128 },
-    { id: 103, name: "Kashmiri Kahwa", category: "Green", price: 549, stock: 25, image: "images/p103.png", desc: "Green tea with saffron, cardamom, cinnamon and almond flakes." },
-    { id: 104, name: "Masala Chai Blend", category: "Black", price: 399, stock: 60, image: "images/p104.png", desc: "Bold Assam leaves with ginger, cardamom, clove and black pepper. Our bestseller.", rating: 4.7, reviews: 342 },
-    { id: 105, name: "Nilgiri Green Tea", category: "Green", price: 449, stock: 30, image: "images/p105.png", desc: "Smooth, grassy green tea from the Blue Mountains of the south." },
-    { id: 106, name: "Chamomile & Tulsi", category: "Herbal", price: 499, stock: 18, image: "images/p106.png", desc: "Caffeine-free calming blend of chamomile flowers and holy basil." },
-    { id: 107, name: "Hibiscus Rose Infusion", category: "Herbal", price: 599, stock: 0, image: "images/p107.png", desc: "Tangy hibiscus with rose petals. Lovely iced." },
-    { id: 108, name: "Tea Lover's Sampler Gift Box", category: "Gifts", price: 1899, stock: 9, image: "images/p108.png", desc: "Six of our favourite teas in a wooden gift box with a brewing guide." }
+    { id: 101, name: "Assam Breakfast Black Tea", category: "Black", price: 349, stock: 40, image: "images/p101.png", packSize: "250g", unit: "250g", desc: "Strong, malty CTC tea from Upper Assam estates. Perfect with milk and a little sugar in the morning." },
+    { id: 102, name: "Darjeeling First Flush", category: "Black", price: 1299, stock: 12, image: "images/p102.png", packSize: "100g", unit: "100g", desc: "Delicate, floral spring harvest leaves with a muscatel note. Best without milk.", rating: 4.8, reviews: 128 },
+    { id: 103, name: "Kashmiri Kahwa", category: "Green", price: 549, stock: 25, image: "images/p103.png", packSize: "100g", unit: "100g", desc: "Green tea with saffron, cardamom, cinnamon and almond flakes." },
+    { id: 104, name: "Masala Chai Blend", category: "Black", price: 399, stock: 60, image: "images/p104.png", packSize: "250g", unit: "250g", desc: "Bold Assam leaves with ginger, cardamom, clove and black pepper. Our bestseller.", rating: 4.7, reviews: 342 },
+    { id: 105, name: "Nilgiri Green Tea", category: "Green", price: 449, stock: 30, image: "images/p105.png", packSize: "100g", unit: "100g", desc: "Smooth, grassy green tea from the Blue Mountains of the south." },
+    { id: 106, name: "Chamomile & Tulsi", category: "Herbal", price: 499, stock: 18, image: "images/p106.png", packSize: "100g", unit: "100g", desc: "Caffeine-free calming blend of chamomile flowers and holy basil." },
+    { id: 107, name: "Hibiscus Rose Infusion", category: "Herbal", price: 599, stock: 0, image: "images/p107.png", packSize: "100g", unit: "100g", desc: "Tangy hibiscus with rose petals. Lovely iced." },
+    { id: 108, name: "Tea Lover's Sampler Gift Box", category: "Gifts", price: 1899, stock: 9, image: "images/p108.png", packSize: "6 × 50g", unit: "6 × 50g", desc: "Six of our favourite teas in a wooden gift box with a brewing guide." }
   ];
 
   // ---- API START: simulated store backend. DO NOT CHANGE this block. ----
@@ -3001,7 +3001,7 @@
       html += '  <img src="' + p.image + '" alt="' + p.name + '" class="cart-item-img" width="64" height="64" loading="lazy" decoding="async">';
       html += '  <div class="cart-item-info">';
       html += '    <h3 class="cart-item-title">' + p.name + '</h3>';
-      html += '    <div class="cart-item-price">' + formatINR(p.price) + '</div>';
+      html += '    <div class="cart-item-price">' + formatINR(p.price) + ' <span style="font-size: 13px; color: #666; font-weight: 400;">/ ' + (p.packSize || p.unit || 'pack') + '</span></div>';
       html += '    <div class="wishlist-item-stock ' + (isSoldOut ? 'out-of-stock' : 'in-stock') + '">' + (isSoldOut ? 'Sold out' : 'In stock (' + p.stock + ' available)') + '</div>';
       html += '    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px;">';
       if (isSoldOut) {
@@ -3124,7 +3124,7 @@
       html += '    <p class="product-desc">' + p.desc + '</p>';
       
       html += '    <div class="card-footer">';
-      html += '      <div class="product-price price">' + formatINR(p.price) + ' <span>/ pack</span></div>';
+      html += '      <div class="product-price price">' + formatINR(p.price) + ' <span>/ ' + (p.packSize || p.unit || 'pack') + '</span></div>';
       html += '      <div class="card-actions">';
       html += '        <button type="button" class="btn btn-secondary" onclick="openQuickViewById(' + p.id + ')" aria-label="Quick view ' + p.name + '">Quick view</button>';
       
@@ -3183,7 +3183,7 @@
       html += '    <p class="product-desc">' + p.desc + '</p>';
       
       html += '    <div class="card-footer">';
-      html += '      <div class="product-price price" id="price-' + p.id + '">' + formatINR(p.price) + ' <span>/ pack</span></div>';
+      html += '      <div class="product-price price" id="price-' + p.id + '">' + formatINR(p.price) + ' <span>/ ' + (p.packSize || p.unit || 'pack') + '</span></div>';
       html += '      <div class="card-actions">';
       html += '        <button type="button" class="btn btn-secondary" onclick="openQuickViewById(' + p.id + ')" aria-label="Quick view ' + p.name + '">Quick view</button>';
       
@@ -3348,7 +3348,7 @@
       html += '</div>';
     }
 
-    html += '  <div class="price" style="margin-bottom: 14px;">' + formatINR(p.price) + ' <span class="small-text" style="font-weight: 400; color: #777;">(inclusive of GST)</span></div>';
+    html += '  <div class="price" style="margin-bottom: 14px;">' + formatINR(p.price) + ' <span style="font-size: 15px; font-weight: 500; color: var(--ink);">/ ' + (p.packSize || p.unit || 'pack') + '</span> <span class="small-text" style="font-weight: 400; color: #777;">(inclusive of GST)</span></div>';
     html += '  <p style="margin-bottom: 18px; line-height: 1.6; color: #555;">' + p.desc + '</p>';
     
     if (!isSoldOut) {
@@ -3552,7 +3552,7 @@
         html += '<div class="cart-item">';
         html += '  <img src="' + p.image + '" alt="' + p.name + '" class="cart-item-img" width="64" height="64" loading="lazy" decoding="async">';
         html += '  <div class="cart-item-info">';
-        html += '    <h3 class="cart-item-title">' + p.name + '</h3>';
+        html += '    <h3 class="cart-item-title">' + p.name + ' <span style="font-size: 12px; font-weight: 400; color: #666; font-family: var(--font-sans);">(' + (p.packSize || p.unit || 'pack') + ')</span></h3>';
         html += '    <div class="cart-item-price">' + formatINR(p.price) + ' &times; ' + c.qty + ' = <strong>' + formatINR(p.price * c.qty) + '</strong></div>';
         html += '    <div class="cart-item-controls">';
         html += '      <div class="qty-stepper">';
